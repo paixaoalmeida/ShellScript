@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+#Programa que extrai usuários da pasta /etc/passwd
+
+#Extrai usuários do arquivo passwd e pode colocar em maiusculo ou em ordem alfabetica
+
+#---------------------------------------------------------------------------------------
+#v1.0 / 21 abril 20:44
+   #-adicionado menu de ajuda (-h)
+   #-adicionado funcao de verificar versao (-v)
+   #-adicionado funcao de colocar a lista em ordem alfabetica (-s)
+
+   #v1.1 / 21 abril 20:46
+   #-adicionando basename no nome do script
+   #-adicionando funcao de letra maisucula (-m)
+   #-mensagem de erro se houver uma variavel invalida (*)
+   #-funcao letra maiuscula em ordem alfabetica (-m)
+   #-funcao case no código (onde junta todos os if e then)
+
+   #---------------------------------------------------------------------------------------
+#VARIÁVEIS
+
+MAIUSCULO="$(cat /etc/passwd | cut -d : -f 1)"
+
+#variavel para quando alguem der um parametro que nao existe
+ERROR="Esse parametro não existe!"
+
+#variavel que extrai a lista de usuarios do diretório /etc/passwd
+USUARIOS="$(cat /etc/passwd | cut -d : -f 1)"
+
+#variavel de parametro de ajuda -h
+#o basename é para tirar o ./ na execucacao do script (deixar mais bonito)
+MENSAGEM_USO="
+ $(basename $0) - [OPÇÕES]
+
+ -h - Menu de ajuda
+ -v - Versão
+ -s - Lista de users em ordem alfabetica
+ -m - Lista de users em ordem alfabetica e letra maiuscula
+"
+VERSAO="Versão: v1.0"
+#----------------------------------------------------------------------------------------
+#Usando if para colocar o menu de ajuda (v1.0)
+# if [ "$1" = "-h" ]
+# then
+#   echo "$MENSAGEM_USO" && exit 0
+# fi
+# #-------------------------------------------------------------------------------
+# #Usando o if e then para colocar a versao com -v
+# if [ "$1" = "-v" ]
+# then
+#   echo "$VERSAO" && exit 0
+# fi
+# #-------------------------------------------------------------------------------
+# #Colocando o sort junto com o parametro usuarios para ficar em ordem alfabetica
+# if [ "$1" = "-s" ]
+# then
+#   echo "$USUARIOS" | sort && exit 0
+# fi
+
+#Usando o case para diminuir o numero de if e then (v1.1)
+case "$1" in
+  -h) echo "$MENSAGEM_USO" && exit 0                            ;;
+  -v) echo "$VERSAO" && exit 0                                  ;;
+  -s) echo "$USUARIOS" | sort && exit 0                         ;;
+  -m) echo "$MAIUSCULO" | tr [a-z] [A-Z] | sort && exit 0       ;;
+   *) echo "$ERROR" && exit 0                                   ;;
+esac
+
+
+echo "$USUARIOS"
