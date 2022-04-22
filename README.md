@@ -1,0 +1,2 @@
+# shellscript
+Aprendendo shell script
