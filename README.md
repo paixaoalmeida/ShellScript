@@ -1,5 +1,5 @@
-# shellscript
-Aprendendo shell script
+# Shell Script
+Aprendendo Shell Script
 
 Olá, aqui vou publicar scripts (shell) de toda a natureza durante o meu aprendizado
 
