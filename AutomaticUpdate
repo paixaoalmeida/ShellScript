@@ -1,0 +1,39 @@
+#!usr/bin/env bash
+
+#Script que atualiza os repositórios, faz o upgrade e no final também exclui pacotes com o sudo apt autoremove
+
+#Não terá parametros, apenas mensagem de erro se algo falhar
+
+#dia 22 abril de 2020 / 22:12
+
+#------------------------------------------------------------------------------------------------------------------
+
+#VARIÁVEIS
+
+
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------------------------------
+
+#CÓDIGO DO PROGRAMA
+if [ "$(id -u)" = "1000" ]
+then
+  echo -e "\e[31;1;5mVOCÊ NÃO É ROOT SAI \e[m" && exit 0
+fi
+
+echo -e "\e[31;5;1mOPERAÇÕES UPDATE,UPGRADE E AUTOREMOVE \e[m"
+
+echo "$(apt update)"
+
+echo "$(apt upgrade)"
+
+echo "$(apt autoremove)" && echo -e "\e[31;5;1mOPERAÇÕES CONLUIDAS. \e[m"
