@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+#Script extrai titulos de sites da internet pelo HTML e mostrar na tela
+#netinfoextract
+
+#-----------------------------------------------------------------------------------------
+#VERSÕES/ATUALIZACOES
+
+#versão v1.0
+#dia 23 abril 21:59
+#testado em GNU bash, versão 5.0.17(1)-release (x86_64-pc-linux-gnu)
+#-Verifica se o lynx está instalado, notifica o usuário e instala o lynx
+#-dá um lynx -source na página que for escrita (site.com.br) ($1)
+
+
+
+
+
+
+
+#------------------------------------------------------------------------------------------
+#VARIÁVEIS
+VERMELHO_PISCANTE="\e[31;1m"
+
+VERDE_PISCANTE="\e[32;1m"
+
+
+
+
+
+
+
+
+
+
+
+#--------------------------------------------------------------------------------------------
+#CÓDIGO DO PROGRAMA
+
+#O lynx está instalado?
+if [ "$(which lynx)" = "lynx not found" ]
+then
+  echo -e "${VERMELHO_PISCANTE}VOCÊ TEM O LYNX!" && echo -e "${VERDE_PISCANTE}INSTALANDO O LYNX PARA VOCÊ" && echo $(sudo apt install lynx) && exit
+fi
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+lynx -source https://www.lojatsgvl.com.br/ | grep "<div title=" HTMLTSG > titulos.txt | sed 's/class=.*"false">//;s/<div.*"tittle"//' titulos.txt > tituloscertos.txt
