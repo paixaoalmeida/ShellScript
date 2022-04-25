@@ -17,13 +17,18 @@
    #-funcao letra maiuscula em ordem alfabetica (-m)
    #-funcao case no código (onde junta todos os if e then)
 
+   #v1.2/ 24 abril 21:53
+   #adicionado mensagem de boas vindas
+   #funcao que só pode rodar sendo root
+   #variavel erro retirada (sera colocada em breve)
+   #diminui drasticamente o tamanho do código, estava muito poluido
+   #mesmo problema de outros códigos, eu coloco um if com alguma função, mas os echos executam junto, o que deixa feio, irei arrumar
+
    #---------------------------------------------------------------------------------------
 #VARIÁVEIS
 
 MAIUSCULO="$(cat /etc/passwd | cut -d : -f 1)"
 
-#variavel para quando alguem der um parametro que nao existe
-ERROR="Esse parametro não existe!"
 
 #variavel que extrai a lista de usuarios do diretório /etc/passwd
 USUARIOS="$(cat /etc/passwd | cut -d : -f 1)"
@@ -33,39 +38,33 @@ USUARIOS="$(cat /etc/passwd | cut -d : -f 1)"
 MENSAGEM_USO="
  $(basename $0) - [OPÇÕES]
 
+  Executar o script sem nenhum parametro irá dar todos os usuários
  -h - Menu de ajuda
  -v - Versão
  -s - Lista de users em ordem alfabetica
  -m - Lista de users em ordem alfabetica e letra maiuscula
 "
-VERSAO="Versão: v1.0"
+VERSAO="Versão: v1.1"
 #----------------------------------------------------------------------------------------
-#Usando if para colocar o menu de ajuda (v1.0)
-# if [ "$1" = "-h" ]
-# then
-#   echo "$MENSAGEM_USO" && exit 0
-# fi
-# #-------------------------------------------------------------------------------
-# #Usando o if e then para colocar a versao com -v
-# if [ "$1" = "-v" ]
-# then
-#   echo "$VERSAO" && exit 0
-# fi
-# #-------------------------------------------------------------------------------
-# #Colocando o sort junto com o parametro usuarios para ficar em ordem alfabetica
-# if [ "$1" = "-s" ]
-# then
-#   echo "$USUARIOS" | sort && exit 0
-# fi
 
-#Usando o case para diminuir o numero de if e then (v1.1)
+#O usuário é ROOT?
+if [ "$(id -u)" = "1000" ]
+then
+  echo -e "\e[31;5;1mVOCÊ SÓ PODE EXECUTAR COMO ROOT \e[m" && exit 0
+fi
+
+#CÓDIGO DO PROGRAMA
+
+#MENU DE ajuda (v1.1)
 case "$1" in
   -h) echo "$MENSAGEM_USO" && exit 0                            ;;
   -v) echo "$VERSAO" && exit 0                                  ;;
   -s) echo "$USUARIOS" | sort && exit 0                         ;;
   -m) echo "$MAIUSCULO" | tr [a-z] [A-Z] | sort && exit 0       ;;
-   *) echo "$ERROR" && exit 0                                   ;;
 esac
 
 
-echo "$USUARIOS"
+#Tela inicial quando o script é executado sem parametros
+echo -e "\e[32;1mBEM VINDO ao Showuser.sh! \e[m \n"
+echo -e "\e[35;1mO script extrai os usuários do documento passwd (Sistemas Unix/Linux) \e[m \n"
+echo -e "\e[33;mUSE O PARAMETRO -h para visualizar o menu de execução desse script! \e[m"
