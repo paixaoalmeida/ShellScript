@@ -31,6 +31,11 @@
 #adicionado função que só executa o script como root
 #(precisa ser arrumado o fato de que quando executa um parametro ele junto da os dois echos que tem no começo!!!)
 
+#versao v1.1
+#dia 06 maio 00:54
+#adicionado o apt-get, onde não dá mais o erro de CLI instável!! (estou meio off mas estou voltando nos projetos)
+#Cara isso me incomodava muito (erro de CLI do apt instável)
+
 
 
 
@@ -39,7 +44,7 @@
 #------------------------------------------------------------------------------------------
 #VARIÁVEIS
 
-INSTALL_LYNX="$(sudo apt install lynx)"
+INSTALL_LYNX="$(apt-get install lynx)"
 
 EXIT_SCRIPT="$(exit 0)"
 
@@ -52,6 +57,7 @@ $(basename $0) - MENU DE AJUDA
 -e (Verifica se o lynx está instalado no sistema
 -l (Instala o lynx no sistema, caso não esteja instalado)
 -v (Verifica a versão do script)
+-s (Coloque a URL do site que você desejar)
 "
 
 SOURCE_LYNX="$(lynx -source "$2")"
@@ -59,6 +65,7 @@ SOURCE_LYNX="$(lynx -source "$2")"
 VERSAO="v1.1"
 
 #--------------------------------------------------------------------------------------------
+# set -x
 
 #O usuário é ROOT?
 if [ "$(id -u)" = "1000" ]
@@ -70,7 +77,6 @@ fi
 #CÓDIGO DO PROGRAMA
 echo -e "\e[33;1mNETINFOEXTRACT : Extrai títulos de páginas via HTML usando o lynx \e[m \n"
 echo -e "\e[35;1mPARA SABER OS PARAMETROS DE EXECUÇÃO, execute o script com -h \e[m"
-
 
 #O lynx está instalado?
 if [ "$(which lynx)" = "lynx not found" ]
