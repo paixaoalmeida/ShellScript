@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+#----------------------------------------------------------------------------------------
+#Programa que gerencia um pequeno banco de dados de usuários
+#Tem ID do usuário, nome e e-mail
+#7 de Maio ás 21:51
+#Testado em estado em GNU bash, versão 5.0.17(1)-release (x86_64-pc-linux-gnu)
+#Não fiz o código diretamente, mas vou estuda-lo e melhora-lo
+
+
+#---------------------------------------------------------------------------------------------------
+
+#v.1.0
+#Lista usuário
+#Adiciona usuário
+#Remove usuário
+#---------------------------------------------------------------------------------------------------
+
+#VARIAVEIS
+
+ARQUIVO_BANCO_TXT="banco_de_dados.txt"
+
+CORES_RED="\e[31;1;1m"
+
+CORES_YELLOW="\e[33;1;1m"
+
+CORES_GREEN="\e[32;1;1m"
+
+SEPARA=:
+
+TEMP=temp.$$
+
+#----------------------------------------------------------------------------------------------------
+
+#O usuário tem permissão de leitura e escrita no documento?
+[ ! -e "$ARQUIVO_BANCO_TXT" ] && echo -e "${CORES_GREEN}O ARQUIVO QUE CONTÉM OS USUÁRIOS NÃO EXISTE! CRIE UM!" && exit 1
+[ ! -r "$ARQUIVO_BANCO_TXT" ] && echo -e "${CORES_RED}NÃO TEMOS PERMISSÃO DE LEITURA NO DOCUMENTO" && exit 1
+[ ! -w "$ARQUIVO_BANCO_TXT" ] && echo -e "${CORES_YELLOW}NÃO TEMOS PERMISSÃO DE ESCRITA NO ARQUIVO" && exit 1
+
+#-----------------------------------------------------------------------------------------------------
+ListaUsuario () {
+  while read -r linha
+  do
+     [ "$(echo $linha | cut -c1)" = "#" ] && continue
+     [ ! "$linha" ] && continue
+
+     local id="$(echo $linha | cut -d "$SEPARA" -f1)"
+     local nome="$(echo $linha | cut -d "$SEPARA" -f2)"
+     local email="$(echo $linha | cut -d "$SEPARA" -f3)"
+
+     echo -e "${CORES_YELLOW}ID:  ${CORES_RED}$id"
+     echo -e "${CORES_YELLOW}NOME:  ${CORES_RED}$nome"
+     echo -e "${CORES_YELLOW}EMAIL: ${CORES_RED}$email"
+  done < "$ARQUIVO_BANCO_TXT"
+}
+
+ValidaExistenciaUser () {
+  grep -i "$1$SEPARA" "$ARQUIVO_BANCO_TXT"
+}
+
+InserirUser () {
+  local nome="$(echo $1 | cut -d $SEPARA -f2)"
+
+  if ValidaExistenciaUser "$nome"
+  then
+    echo "ERRO,JÁ EXISTE ESSE USUÁRIO" && exit 1
+  else
+    echo "$*" >> "$ARQUIVO_BANCO_TXT"
+    echo "Usuário cadastrado com sucesso"
+  fi
+}
+
+ApagaUser () {
+  ValidaExistenciaUser "$1" || return
+
+  grep -i -v "$1$SEPARA" "$ARQUIVO_BANCO_TXT" > "$TEMP"
+  mv "$TEMP" "$ARQUIVO_BANCO_TXT"
+
+  echo "Usuário removido com sucesso"
+}
