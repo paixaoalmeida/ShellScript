@@ -5,4 +5,4 @@ Olá, aqui vou publicar scripts (shell) de toda a natureza durante o meu aprendi
 
 Creio que estou evoluindo gradativamente, estou gostando.
 
-echo "$Até mais..."
+echo "Até mais..."
