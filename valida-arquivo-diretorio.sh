@@ -1,6 +1,7 @@
 #!usr/bin/env bash
 
 #dia 11 de maio ás 22:00
+#uso do elif, que é uma extensão do else e if, eu gostei da ultilidade dele
 
 #o $# significa que vai pegar todos os parametros, o -ne é not equal , se não der um parametro irá dar uma mensagem de exemplo
 if [ $# -ne 1 ]
