@@ -3,6 +3,6 @@ Aprendendo Shell Script
 
 Olá, aqui vou publicar scripts (shell) de toda a natureza durante o meu aprendizado
 
-Creio que estou evoluindo gradativamente, estou gostando.
+Scripts mais  voltados a segurança ofensiva (port scan, domain recon, dns recon etc)
 
 echo "Até mais..."
