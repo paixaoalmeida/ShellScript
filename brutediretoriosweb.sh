@@ -4,6 +4,8 @@
 #dia 20 de maio ás 10:03 (manhã)
 #Apenas faz o bruteforce e na saída do script mostra as URLs disponíveis
 #Irei usar para uso pessoas e também irei tentar aperfeiçoar!
+#Direcionar as saídas validas para um arquivo, pois o wget baixa os arquivos
+#Ou quando usar criar uma pasta só para isso, ou bash brutediretoriosweb.sh > "file.txt"
 
 
 domain=$1
