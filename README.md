@@ -1,5 +1,5 @@
 # Shell Script
-Aprendendo Shell Script
+Shell Script com foco em PENTEST
 
 Olá, aqui vou publicar scripts (shell) de toda a natureza durante o meu aprendizado
 
