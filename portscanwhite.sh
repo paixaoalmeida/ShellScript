@@ -8,21 +8,28 @@
 
 #Fiz algumas pequenas alteracoes no visual e na saida do script (dia 14 maio)
 #ultilizado o hping3, que voce pinga e ele fornece a resposta que teve na porta especifica do host
-#depois disso foi filtrar as informacoes com grep, cut etc 
+#depois disso foi filtrar as informacoes com grep, cut etc
+
+#dia 23 de maio ás 16:46
+#VOCÊ DEVE RODAR O SCRIPT COMO ROOT, OTHERWISE VAI DAR UMA MENSAGEM "RUN AS ROOT" OU O SCRIPT SIMPLESMENTE
+#NÃO VAI RODAR!
+#Algumas mudanças de visual para melhor apreciação da ferramenta
+#Se demorar mto pouco para o resultado, significa que a URL está errada (tenho que dar uma mensagem de erro p URL inválida)
+
 #-----------------------------------------------------------------------------------------------------------------
 
 #VARIAVEIS
 
 MENSAGEM_HELP="
-SCAN WHITEROSE
-
+$(basename $0) - SCAN WHITEROSE / MENU DE AJUDA
 MODO DE USO: $0 IP ALVO e porta alvo
+SÓ FUNCIONA SE RODAR COMO SUDO!!!!!!
 "
 
 #PORTA_ABERTA=$(hping3 -S -p $2 -c 1 $1 2> /dev/null | grep flags=SA | cut -d " " -f 2 | cut -d = -f 2)
 
 COR_VERMELHO="\e[31;1;4m"
-
+COR_AMARELO="\e[33;1;4m"
 #------------------------------------------------------------------------------------------------------------------
 
 #CÓDIGO DO PROGRAMA
@@ -32,7 +39,7 @@ fi
 
 #------------------------------------------------------------------------------------------------------------------
 
-if [ $# -le 1 ];then
+if [ $1 =  ];then
   echo "$MENSAGEM_HELP"                #Hping3, remove as mensagem de erro e filtra somente as flags SYN e ACK
 else                                   #Que são as flags padrão de quando há resposta positiva
 hping3 -S -p $2 -c 1 $1 2> /dev/null | grep flags=SA | cut -d " " -f 2 | cut -d = -f 2
@@ -40,5 +47,5 @@ if [ $(hping3 -S -p $2 -c 1 $1 2> /dev/null | grep flags=SA | cut -d " " -f 2 | 
   echo
   echo -e ${COR_VERMELHO}"Porta $2 aberta no host acima"
 else
-  echo "Porta fechada/sem serviço no host"
+  echo -e ${COR_AMARELO}"Porta $2 sem serviço/filtrada no host"
 fi fi
