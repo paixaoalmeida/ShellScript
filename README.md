@@ -1,8 +1,7 @@
 # Shell Script
-Shell Script com foco em PENTEST
 
-Olá, aqui vou publicar scripts (shell) de toda a natureza durante o meu aprendizado
+### Aqui serão postados alguns projetos pessoais meus em Shell Script
 
-Scripts mais  voltados a segurança ofensiva (port scan, domain recon, dns recon etc)
+### Todos serão produzidos durante e de acordo com o meu aprendizaddo
 
-echo "Até mais..."
+### echo "See u guys"
